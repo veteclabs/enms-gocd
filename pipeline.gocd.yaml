@@ -1,0 +1,40 @@
+pipeline:
+  name: SamplePipeline
+
+  # 환경 설정
+  materials:
+    - git:
+        url: 'https://github.com/veteclab/enms-gocd.git'
+        branch: 'main'
+        username: 'markcha-ops'
+
+  stages:
+    - name: Build
+      jobs:
+        - name: Compile
+          tasks:
+            - exec:
+                command: echo
+                arguments: ["Building the application"]
+          resources:
+            - 'source_code'
+
+    - name: Test
+      jobs:
+        - name: UnitTest
+          tasks:
+            - exec:
+                command: echo
+                arguments: ["Running unit tests"]
+          resources:
+            - 'build_artifacts'
+
+    - name: Deploy
+      jobs:
+        - name: DeployToStaging
+          tasks:
+            - exec:
+                command: echo
+                arguments: ["Deploying to staging environment"]
+          resources:
+            - 'test_results'
